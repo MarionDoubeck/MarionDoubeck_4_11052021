@@ -20,16 +20,17 @@ function launchModal() {
   document.querySelector(".bground").style.display = "block";
   document.querySelector(".modal-body").style.display = "block";
   document.querySelector(".modal-body2").style.display = "none";
-  var heightModal=document.querySelector(".modal-body").style.height;
 }
 
 //validation
 document.querySelectorAll(".btn-submit").forEach((btn) => btn.addEventListener("click", launchValidate));
 
 function launchValidate() {
+  var heightModal=document.querySelector(".modal-body").offsetHeight;
   document.querySelector(".modal-body").style.display = "none";
   document.querySelector(".modal-body2").style.display = "block";
-  document.querySelector(".modal-body2").style.height=heightModal;
+  let HM=heightModal.toString();
+  document.querySelector(".modal-body2").style.height=HM+"px";
 }
 
 document.querySelectorAll(".btn-close").forEach((btn) => btn.addEventListener("click", closeModal));
