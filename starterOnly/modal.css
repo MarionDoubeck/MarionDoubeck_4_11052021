@@ -194,7 +194,10 @@ main {
   margin: 15px auto;
   font-size: 40px;
   text-align: center;
-  
+  padding-top: 250px;
+}
+.modal-body2 #thanks{
+  padding-bottom: 250px;
 }
 
 label {
@@ -343,6 +346,7 @@ input[data-error]::after {
   cursor: pointer;
   border: 0;
 }
+
 /* custom select styles */
 .custom-select {
   position: relative;
