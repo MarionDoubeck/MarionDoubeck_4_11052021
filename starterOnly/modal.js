@@ -143,15 +143,22 @@ function compter(e){
     document.getElementById('logVille').style.display="none";
   }
   //test conditions d'utilisation
-
+  let checkConditions=document.getElementById("checkbox1");
+  var erreurChamp7=1;
+  if (checkConditions.checked==true){
+    erreurChamp7=0;
+    document.getElementById('logConditions').style.display="none";
+  }else{
+    erreurChamp7=1;
+    document.getElementById('logConditions').style.display="block";
+    document.getElementById('logConditions').innerHTML="<span style='font-size:14px;color:red'> Veuillez accepter les conditions d'utilisation.</span>";
+  };
   //compter le nombre d'erreurs
-  var nbErr=erreurChamp1+erreurChamp2+erreurChamp3+erreurChamp4+erreurChamp5+erreurChamp6;
-  const logNombreErreurs = document.getElementById('logNombreErreurs');
-  nbChampsMalRenseignes=nbErr.toString().fontcolor("red");
-  logNombreErreurs.innerHTML=nbChampsMalRenseignes+"<span style='font-size:14px;color:red'> champs sont mal renseignés</span>";
-  if (nbErr==0){launchValidate(e)}
+  var nbErr=erreurChamp1+erreurChamp2+erreurChamp3+erreurChamp4+erreurChamp5+erreurChamp6+erreurChamp7;
+  if (nbErr==0){
+    launchValidate(e)}
 };
-
+  
 function launchValidate() {
   var heightModal=document.querySelector(".modal-body").offsetHeight;
   document.querySelector(".modal-body").style.display = "none";
