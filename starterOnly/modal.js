@@ -22,8 +22,135 @@ function launchModal() {
   document.querySelector(".modal-body2").style.display = "none";
 }
 
+//TESTS DU QUESTIONNAIRE
+//Test prénom
+var erreurChamp1=1;
+let prenom=document.getElementById('first');
+const logPrenom = document.getElementById('logPrenom');
+prenom.addEventListener('change', prenomErreur);
+function prenomErreur(e) {
+  prenom.style.borderWidth="5px";
+  if (e.target.value.length>1){
+    prenom.style.borderColor="green";
+    logPrenom.style.display="none";
+    erreurChamp1=0;
+  }else{
+    prenom.style.borderColor="red";
+    erreurChamp1=1;
+    logPrenom.style.display="block";
+    logPrenom.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer 2 caractères ou plus pour le champ du prénom.</span>";
+  }
+};
+//Test nom
+var erreurChamp2=1;
+let nom=document.getElementById('last');
+const logNom = document.getElementById('logNom');
+nom.addEventListener('change', nomErreur);
+function nomErreur(e) {
+  nom.style.borderWidth="5px";
+  if (e.target.value.length>1){
+    nom.style.borderColor="green";
+    logNom.style.display="none";
+    erreurChamp2=0;
+  }else{
+    nom.style.borderColor="red";
+    erreurChamp2=1;
+    logNom.style.display="block";
+    logNom.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer 2 caractères ou plus pour le champ du prénom.</span>";
+  }
+};
+
+
+//Test mail
+var erreurChamp3=1;
+let email=document.getElementById('email');
+const logEmail = document.getElementById('logEmail');
+email.addEventListener('change', emailErreur);
+function emailErreur(e) {
+  email.style.borderWidth="5px";
+  var expressionReguliereEmail	= /^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$/;
+  if (expressionReguliereEmail.exec(e.target.value)!=null){
+    email.style.borderColor="green";
+    logEmail.style.display="none";
+    erreurChamp3=0;
+  }else{
+    email.style.borderColor="red";
+    erreurChamp3=1;
+    logEmail.style.display="block";
+    logEmail.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer une adresse email valide.</span>";
+  }
+};
+
+//Test Date de naissance
+var erreurChamp4=1;
+let birthDate=document.getElementById('birthdate');
+const logDDN = document.getElementById('logDDN');
+birthDate.addEventListener('focus', dateErreur);
+birthDate.addEventListener('change', dateErreur);
+
+function dateErreur(e){
+  birthDate.style.borderWidth="5px";
+  if (e.target.value!="" && e.target.value<"2021-01-01" && e.target.value>"1900-01-01"){
+    birthDate.style.borderColor="green";
+    logDDN.style.display="none";
+    erreurChamp4=0;
+    }else{
+      birthDate.style.borderColor="red";
+      erreurChamp4=1;
+      logDDN.style.display="block";
+      logDDN.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer votre date de naissance au format jj/mm/aaaa .</span>";
+    }
+};
+//Test Nombre tournois
+var erreurChamp5=1;
+let quantity=document.getElementById('quantity');
+const logQuantity = document.getElementById('logQuantity');
+quantity.addEventListener('focus', quantityErreur);
+quantity.addEventListener('change', quantityErreur);
+function quantityErreur(e){
+  quantity.style.borderWidth="5px";
+  if (e.target.value!=""){
+    quantity.style.borderColor="green";
+    logQuantity.style.display="none";
+    erreurChamp5=0;
+  }else{
+    quantity.style.borderColor="red";
+    erreurChamp5=1;
+    logQuantity.style.display="block";
+    logQuantity.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer un nombre.</span>";
+  }
+};
+
+
+  
 //validation
-document.querySelectorAll(".btn-submit").forEach((btn) => btn.addEventListener("click", launchValidate));
+document.querySelectorAll(".btn-submit").forEach((btn) => btn.addEventListener("click", compter));
+
+function compter(e){
+  //test villes
+  var nbVille=0;
+  for ( let pas=1; pas<7;pas++ ){
+    var locString="location"+pas;
+    if (document.getElementById(locString).checked){
+      nbVille++;
+    }
+  };
+  if (nbVille==0){
+    erreurChamp6=1;
+    document.getElementById('logVille').innerHTML="<span style='font-size:14px;color:red'> Veuillez vous inscrire quelquepart.</span>";
+  }else{
+    erreurChamp6=0;
+    document.getElementById('logVille').style.display="none";
+  }
+  //test conditions d'utilisation
+
+  //compter le nombre d'erreurs
+  var nbErr=erreurChamp1+erreurChamp2+erreurChamp3+erreurChamp4+erreurChamp5+erreurChamp6;
+  const logNombreErreurs = document.getElementById('logNombreErreurs');
+  nbChampsMalRenseignes=nbErr.toString().fontcolor("red");
+  logNombreErreurs.innerHTML=nbChampsMalRenseignes+"<span style='font-size:14px;color:red'> champs sont mal renseignés</span>";
+  if (nbErr==0){launchValidate(e)}
+};
 
 function launchValidate() {
   var heightModal=document.querySelector(".modal-body").offsetHeight;
@@ -33,6 +160,7 @@ function launchValidate() {
   document.querySelector(".modal-body2").style.height=HM+"px";
 }
 
+
 //fermeture
 document.querySelectorAll(".btn-close").forEach((btn) => btn.addEventListener("click", closeModal));
 document.querySelectorAll(".close").forEach((btn) => btn.addEventListener("click", closeModal));
@@ -41,75 +169,4 @@ function closeModal(){
   document.querySelector(".bground").style.display = "none";
 }
 
-//TESTS DU QUESTIONNAIRE
-//Test prénom
-let prenom=document.getElementById('first');
-const logPrenom = document.getElementById('logPrenom');
-prenom.addEventListener('change', prenomErreur);
-function prenomErreur(e) {
-  prenom.style.borderWidth="5px";
-  if (e.target.value.length>1){
-    prenom.style.borderColor="green";
-    logPrenom.style.display="none";
-  }else{
-    prenom.style.borderColor="red";
-    logPrenom.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer 2 caractères ou plus pour le champ du prénom.</span>";
-  }
-};
-//Test nom
-let nom=document.getElementById('last');
-const logNom = document.getElementById('logNom');
-nom.addEventListener('change', nomErreur);
-function nomErreur(e) {
-  nom.style.borderWidth="5px";
-  if (e.target.value.length>1){
-    nom.style.borderColor="green";
-    logNom.style.display="none";
-  }else{
-    nom.style.borderColor="red";
-    logNom.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer 2 caractères ou plus pour le champ du prénom.</span>";
-  }
-};
-
-//Test mail
-let email=document.getElementById('email');
-const logEmail = document.getElementById('logEmail');
-email.addEventListener('change', emailErreur);
-function emailErreur(e) {
-  email.style.borderWidth="5px";
-  var expressionReguliereEmail	= /^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$/;
-  if (expressionReguliereEmail.exec(e)!=null){
-    email.style.borderColor="green";
-    logEmail.style.display="none";
-  }else{
-    email.style.borderColor="red";
-    logEmail.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer une adresse email valide.</span>";
-  }
-};
-
-//Date de naissance
-let birthDate=document.getElementById('birthdate');
-const logDDN = document.getElementById('logDDN');
-birthDate.addEventListener('change', dateErreur);
-
-function dateErreur(e){
-  birthDate.style.borderWidth="5px";
-  var expressionReguliereDDN	= /^[0-9]{2}[/]{1}[0-9]{2}[/]{1}[0-9]{2}$/;
-  if (expressionReguliereDDN.exec(e)!=null){
-    birthDate.style.borderColor="green";
-    logDDN.style.display="none";
-  }else{
-    birthDate.style.borderColor="red";
-    logDDN.innerHTML="<span style='font-size:14px;color:red'> Veuillez entrer votre date de naissance au format jj/mm/aaaa .</span>";
-  }
-};
-
-
-
-//"Vous devez choisir une option."
 //"Vous devez vérifier que vous acceptez les termes et conditions."
-//(4)Pour le nombre de concours, une valeur numérique est saisie.
-//(5) Un bouton radio est sélectionné.
-//(6) La case des conditions générales est cochée, l'autre case est facultative / peut être laissée décochée.
-//Conserver les données du formulaire (ne pas effacer le formulaire) lorsqu'il ne passe pas la validation.
-//Le formulaire doit être valide quand l'utilisateur clique sur "Submit"
