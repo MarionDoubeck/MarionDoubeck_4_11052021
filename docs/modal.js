@@ -90,7 +90,7 @@ birthDate.addEventListener('change', dateErreur);
 
 function dateErreur(e){
   birthDate.style.borderWidth="5px";
-  if (e.target.value!="" && e.target.value<"2021-01-01" && e.target.value>"1900-01-01"){
+  if (e.target.value!=""){
     birthDate.style.borderColor="green";
     logDDN.style.display="none";
     erreurChamp4=0;
