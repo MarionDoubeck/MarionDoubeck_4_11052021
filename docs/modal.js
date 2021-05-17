@@ -22,12 +22,14 @@ function launchModal() {
   document.querySelector(".modal-body2").style.display = "none";
 }
 
+
 //TESTS DU QUESTIONNAIRE
 //Test prénom
-var erreurChamp1=1;
-let prenom=document.getElementById('first');
-const logPrenom = document.getElementById('logPrenom');
+var erreurChamp1=1;  //les variables erreursChamp sont à 1 s'il y a une erreur dans ce champ, 0 sinon
+let prenom=document.getElementById('first'); //ce que l'utilisateur a saisi dans ce champ
+const logPrenom = document.getElementById('logPrenom'); //champ de message d'erreur à destination de l'utilisateur
 prenom.addEventListener('change', prenomErreur);
+
 function prenomErreur(e) {
   prenom.style.borderWidth="5px";
   if (e.target.value.length>1){
@@ -42,10 +44,11 @@ function prenomErreur(e) {
   }
 };
 //Test nom
-var erreurChamp2=1;
-let nom=document.getElementById('last');
-const logNom = document.getElementById('logNom');
+var erreurChamp2=1; //les variables erreursChamp sont à 1 s'il y a une erreur dans ce champ, 0 sinon
+let nom=document.getElementById('last'); //ce que l'utilisateur a saisi dans ce champ
+const logNom = document.getElementById('logNom'); //champ de message d'erreur à destination de l'utilisateur
 nom.addEventListener('change', nomErreur);
+
 function nomErreur(e) {
   nom.style.borderWidth="5px";
   if (e.target.value.length>1){
@@ -62,17 +65,18 @@ function nomErreur(e) {
 
 
 //Test mail
-var erreurChamp3=1;
-let email=document.getElementById('email');
-const logEmail = document.getElementById('logEmail');
+var erreurChamp3=1; //les variables erreursChamp sont à 1 s'il y a une erreur dans ce champ, 0 sinon
+let email=document.getElementById('email'); //ce que l'utilisateur a saisi dans ce champ
+const logEmail = document.getElementById('logEmail'); //champ de message d'erreur à destination de l'utilisateur
 email.addEventListener('change', emailErreur);
+
 function emailErreur(e) {
   email.style.borderWidth="5px";
-  var expressionReguliereEmail	= /^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$/;
+  var expressionReguliereEmail	= /^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$/; //format d'une adresse mail
   if (expressionReguliereEmail.exec(e.target.value)!=null){
     email.style.borderColor="green";
     logEmail.style.display="none";
-    erreurChamp3=0;
+    erreurChamp3=0; //on valide le test dès que le champs respecte le format d'une adresse mail
   }else{
     email.style.borderColor="red";
     erreurChamp3=1;
@@ -82,9 +86,9 @@ function emailErreur(e) {
 };
 
 //Test Date de naissance
-var erreurChamp4=1;
-let birthDate=document.getElementById('birthdate');
-const logDDN = document.getElementById('logDDN');
+var erreurChamp4=1; //les variables erreursChamp sont à 1 s'il y a une erreur dans ce champ, 0 sinon
+let birthDate=document.getElementById('birthdate'); //ce que l'utilisateur a saisi dans ce champ
+const logDDN = document.getElementById('logDDN'); //champ de message d'erreur à destination de l'utilisateur
 birthDate.addEventListener('focus', dateErreur);
 birthDate.addEventListener('change', dateErreur);
 
@@ -93,7 +97,7 @@ function dateErreur(e){
   if (e.target.value!=""){
     birthDate.style.borderColor="green";
     logDDN.style.display="none";
-    erreurChamp4=0;
+    erreurChamp4=0;  //on valide le test dès que le champs n'est pas vide
     }else{
       birthDate.style.borderColor="red";
       erreurChamp4=1;
@@ -102,17 +106,17 @@ function dateErreur(e){
     }
 };
 //Test Nombre tournois
-var erreurChamp5=1;
-let quantity=document.getElementById('quantity');
-const logQuantity = document.getElementById('logQuantity');
+var erreurChamp5=1; //les variables erreursChamp sont à 1 s'il y a une erreur dans ce champ, 0 sinon
+let quantity=document.getElementById('quantity'); //ce que l'utilisateur a saisi dans ce champ
+const logQuantity = document.getElementById('logQuantity'); //champ de message d'erreur à destination de l'utilisateur
 quantity.addEventListener('focus', quantityErreur);
 quantity.addEventListener('change', quantityErreur);
 function quantityErreur(e){
   quantity.style.borderWidth="5px";
-  if (e.target.value!=""){
+  if (e.target.value!=""){ 
     quantity.style.borderColor="green";
     logQuantity.style.display="none";
-    erreurChamp5=0;
+    erreurChamp5=0;   //on valide le test dès que le champs n'est pas vide
   }else{
     quantity.style.borderColor="red";
     erreurChamp5=1;
@@ -126,7 +130,11 @@ function quantityErreur(e){
 //validation
 document.querySelectorAll(".btn-submit").forEach((btn) => btn.addEventListener("click", compter));
 
-function compter(e){
+function compter(e){ //cette fonction se lance quand l'utilisateur clique sur le bouton de validation
+  //cette fonction finit les tests des champs : ville d'inscription et conditions d'utilisation coché
+  //puis elle compte le nombre de champs pas ou mal renseignés
+  //enfin, elle appelle la fonction de validation "launchValidate"
+
   //test villes
   var nbVille=0;
   for ( let pas=1; pas<7;pas++ ){
@@ -136,33 +144,35 @@ function compter(e){
     }
   };
   if (nbVille==0){
-    erreurChamp6=1;
-    document.getElementById('logVille').innerHTML="<span style='font-size:14px;color:red'> Veuillez vous inscrire quelquepart.</span>";
+    erreurChamp6=1; //les variables erreursChamp sont à 1 s'il y a une erreur dans ce champ, 0 sinon
+    const logVille=document.getElementById('logVille');//champ de message d'erreur à destination de l'utilisateur
+    logVille.innerHTML="<span style='font-size:14px;color:red'> Veuillez vous inscrire quelquepart.</span>";
   }else{
     erreurChamp6=0;
-    document.getElementById('logVille').style.display="none";
+    logVille.style.display="none";
   }
   //test conditions d'utilisation
   let checkConditions=document.getElementById("checkbox1");
-  var erreurChamp7=1;
+  var erreurChamp7=1; //les variables erreursChamp sont à 1 s'il y a une erreur dans ce champ, 0 sinon
   if (checkConditions.checked==true){
     erreurChamp7=0;
     document.getElementById('logConditions').style.display="none";
   }else{
     erreurChamp7=1;
-    document.getElementById('logConditions').style.display="block";
-    document.getElementById('logConditions').innerHTML="<span style='font-size:14px;color:red'> Veuillez accepter les conditions d'utilisation.</span>";
+    const logConditions=document.getElementById('logConditions');//champ de message d'erreur à destination de l'utilisateur
+    logConditions.style.display="block";
+    logConditions.innerHTML="<span style='font-size:14px;color:red'> Veuillez accepter les conditions d'utilisation.</span>";
   };
-  //compter le nombre d'erreurs
+  //compter le nombre d'erreurs grâce aux variables "erreurChamp"
   var nbErr=erreurChamp1+erreurChamp2+erreurChamp3+erreurChamp4+erreurChamp5+erreurChamp6+erreurChamp7;
   if (nbErr==0){
     launchValidate(e)}
 };
   
 function launchValidate() {
-  var heightModal=document.querySelector(".modal-body").offsetHeight;
-  document.querySelector(".modal-body").style.display = "none";
-  document.querySelector(".modal-body2").style.display = "block";
+  var heightModal=document.querySelector(".modal-body").offsetHeight; //on mesure la hauteur du formulaire afin de garder la même taille pour la fenêtre du message de validation
+  document.querySelector(".modal-body").style.display = "none"; //on fait disparaitre le bloc formulaire
+  document.querySelector(".modal-body2").style.display = "block"; //on fait apparaître le bloc du message de validation
   let HM=heightModal.toString();
   document.querySelector(".modal-body2").style.height=HM+"px";
 }
@@ -175,5 +185,3 @@ document.querySelectorAll(".close").forEach((btn) => btn.addEventListener("click
 function closeModal(){
   document.querySelector(".bground").style.display = "none";
 }
-
-//"Vous devez vérifier que vous acceptez les termes et conditions."
